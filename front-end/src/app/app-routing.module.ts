@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
+  { path: '', component: ConsultarMedicosComponent },
   { path: 'cadastrar-medicos', component: CadastrarMedicosComponent },
   { path: 'consultar-medicos', component: ConsultarMedicosComponent },
   { path: 'editar-medicos/:id', component: EditarMedicosComponent }
