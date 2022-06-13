@@ -1,0 +1,38 @@
+<h5>Consulta de medicos</h5>quantidade
+<p>Listagem de medicos Cadastrados</p>
+
+<table class="table table-hover table-sm table-bordered">
+  <thead>
+    <tr>
+      <td>Nome do medico</td>
+      <td class="d-none d-md-table-cell">CRM</td>
+      <td class="d-none d-sm-table-cell">Telefone</td>
+      <td class="d-none d-lg-table-cell">Tipo</td>
+
+
+      <td>Ações</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let m of medicos">
+
+      <td>{{m.nome}}</td>
+      <td class="d-none d-md-table-cell">{{m.crm}}</td>
+      <td class="d-none d-sm-table-cell">{{m.telefone}}</td>
+      <td class="d-none d-lg-table-cell">{{m.tipo}}</td>
+
+      <td>
+        <button class="btn btn-info btn-sm" [routerLink]="['/editar-medicos',m.idmedico]">Editar</button>
+        &nbsp;
+
+
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan=" 6">Total de registros: {{medicos.length}}
+      </td>
+    </tr>
+  </tfoot>
+</table>
