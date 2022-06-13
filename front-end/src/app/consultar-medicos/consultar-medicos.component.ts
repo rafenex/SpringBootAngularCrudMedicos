@@ -13,6 +13,10 @@ export class ConsultarMedicosComponent implements OnInit {
   medicos: any[] = [];
 
   constructor(private httpClient: HttpClient) {
+
+  }
+
+  ngOnInit(): void {
     this.httpClient.get(
       environment.apiUrl + '/medicos')
       .subscribe(
@@ -24,8 +28,23 @@ export class ConsultarMedicosComponent implements OnInit {
         }
       )
   }
+  excluir(idMedico: number): void {
+    if (window.confirm('Deseja realmente excluir o médico selecionado?')) {
+      this.httpClient.delete(
+        environment.apiUrl + '/medicos/' + idMedico,
+        { responseType: 'text' })
+        .subscribe(
+          (data) => {
+            alert(data);
+            this.ngOnInit();
+          },
+          (e) => {
+            console.log(e);
+          }
+        )
 
-  ngOnInit(): void {
+    }
   }
 
 }
+
