@@ -7,12 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CadastrarMedicosComponent } from './cadastrar-medicos/cadastrar-medicos.component';
 import { ConsultarMedicosComponent } from './consultar-medicos/consultar-medicos.component';
+import { EditarMedicosComponent } from './editar-medicos/editar-medicos.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CadastrarMedicosComponent,
-    ConsultarMedicosComponent
+    ConsultarMedicosComponent,
+    EditarMedicosComponent
   ],
   imports: [
     BrowserModule,
