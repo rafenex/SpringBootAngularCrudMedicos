@@ -17,30 +17,31 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class MedicoController {
-	
+
 	@Autowired
 	private IMedicoRepository medicoRepository;
-	
+
 	private static final String ENDPOINT = "api/medicos";
-	
+
 	@PostMapping(value = ENDPOINT)
-	public ResponseEntity<String> cadastrar(@RequestBody MedicoPostRequest request){
+	public ResponseEntity<String> cadastrar(@RequestBody MedicoPostRequest request) {
 		try {
 			Medico medico = request.toMedico();
 			medicoRepository.save(medico);
 			return ResponseEntity.status(HttpStatus.CREATED).body("Medico cadastrado com sucesso");
-			
+
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: " + e.getMessage());
 		}
 	}
-	
-	@GetMapping(value=ENDPOINT)
-	public ResponseEntity<List<MedicoGetResponse>> listar(){
+
+	@GetMapping(value = ENDPOINT)
+	public ResponseEntity<List<MedicoGetResponse>> listar() {
 		List<MedicoGetResponse> response = new ArrayList<MedicoGetResponse>();
 		for (Medico medico : medicoRepository.findAll()) {
 			MedicoGetResponse item = new MedicoGetResponse();
@@ -53,9 +54,9 @@ public class MedicoController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
-	
+
 	@GetMapping(value = ENDPOINT + "/{idMedico}")
-	public ResponseEntity<?> findById(@PathVariable("idMedico")Long idMedico){
+	public ResponseEntity<?> findById(@PathVariable("idMedico") Long idMedico) {
 		Optional<Medico> item = medicoRepository.findById(idMedico);
 		if (item.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Médico não encontrado");
@@ -70,11 +71,11 @@ public class MedicoController {
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		}
 	}
-	
+
 	@DeleteMapping(value = ENDPOINT + "/{idMedico}")
-	public ResponseEntity<String>deleteById(@PathVariable("idMedico")Long idMedico){
+	public ResponseEntity<String> deleteById(@PathVariable("idMedico") Long idMedico) {
 		try {
-			Optional<Medico>item = medicoRepository.findById(idMedico);
+			Optional<Medico> item = medicoRepository.findById(idMedico);
 			if (item.isEmpty()) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado");
 			} else {
@@ -83,9 +84,29 @@ public class MedicoController {
 				return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso");
 			}
 		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+		}
+	}
+
+	@PutMapping(value = ENDPOINT +"/{idMedico}")
+	public ResponseEntity<?> update(@PathVariable("idMedico")Long idMedico, @RequestBody MedicoPostRequest request){
+		try {
+			Optional<Medico> item = medicoRepository.findById(idMedico);
+			if (item.isEmpty()) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Médico não encontrado");
+			}else { 
+				Medico medico = item.get();
+				medico.setNome(request.getNome());
+				medico.setCrm(request.getCrm());
+				medico.setTelefone(request.getTelefone());
+				medico.setTipo(request.getTipo());
+				medicoRepository.save(medico);
+				return ResponseEntity.status(HttpStatus.OK).body("Médico atualizado");
+			}
+		} catch(Exception e){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: "+ e.getMessage());
 		}
 		
 	}
-	
+
 }
