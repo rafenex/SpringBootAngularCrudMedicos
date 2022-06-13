@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cadastrar-medicos',
@@ -6,10 +9,41 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cadastrar-medicos.component.css']
 })
 export class CadastrarMedicosComponent implements OnInit {
+  mensagem = "";
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
+  }
+
+  formCadastro = new FormGroup({
+    nome: new FormControl('', [Validators.required]),
+    crm: new FormControl('', [Validators.required]),
+    telefone: new FormControl('', [Validators.required]),
+    tipo: new FormControl('', [Validators.required]),
+  })
+
+  get form(): any {
+    return this.formCadastro.controls;
+  }
+
+  onSubmit(): void {
+    this.httpClient.post(
+      environment.apiUrl + '/medicos',
+      this.formCadastro.value,
+      { responseType: 'text' })
+      .subscribe(
+        data => {
+          this.mensagem = data;
+          this.formCadastro.reset();
+        },
+        e => {
+          this.mensagem = "Ocorreu um erro, o cadastro não foi realizado";
+          console.log(e);
+        }
+      )
+
+
   }
 
 }

@@ -1,1 +1,64 @@
-<p>cadastrar-medicos works!</p>
+<h5>Cadastrar Médico</h5>
+<p>Preencha os campos para incluir um médico.</p>
+<form [formGroup]="formCadastro" (ngSubmit)="(onSubmit())">
+  <div *ngIf="mensagem" class="mb-3 alert alert-dark">
+    <strong>{{mensagem}}</strong>
+  </div>
+  <div class="row mb-3">
+    <div class="class col-md-12">
+      <label>Nome do Médico:</label>
+      <input type="text" class="form-control" formControlName="nome" />
+      <div class="text-danger" *ngIf="form.nome.touched && form.nome.invalid">
+        <span *ngIf="form.nome.errors.required">
+          <i class="fa fa-exclamation-circle"></i>
+          Por favor, digite o nome.
+        </span>
+      </div>
+    </div>
+
+  </div>
+  <div class="row mb-3">
+    <div class="class col-md-12">
+      <label>CRM:</label>
+      <input type="text" class="form-control" formControlName="crm" />
+      <div class="text-danger" *ngIf="form.crm.touched && form.crm.invalid">
+        <span *ngIf="form.crm.errors.required">
+          <i class="fa fa-exclamation-circle"></i>
+          Por favor, digite o crm.
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="class col-md-6">
+      <label>Telefone:</label>
+      <input type="text" class="form-control" formControlName="telefone" />
+      <div class="text-danger" *ngIf="form.telefone.touched && form.telefone.invalid">
+        <span *ngIf="form.telefone.errors.required">
+          <i class="fa fa-exclamation-circle"></i>
+          Por favor, digite o telefone.
+        </span>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <label>Tipo de médico:</label>
+      <input type="text" name="" id="" class="form-control" formControlName="tipo">
+      <div class="text-danger" *ngIf="form.tipo.touched && form.tipo.invalid">
+        <span *ngIf="form.tipo.errors.required">
+          <i class="fa fa-exclamation-circle"></i>
+          Por favor, digite o tipo.
+        </span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row mb-3">
+    <div class="col-md-2">
+      <input type="submit" [disabled]="!formCadastro.valid" class="btn btn-dark" value="Cadastrar" />
+    </div>
+  </div>
+
+
+</form>
