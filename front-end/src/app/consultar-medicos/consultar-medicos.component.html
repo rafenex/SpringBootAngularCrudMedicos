@@ -1,16 +1,14 @@
-<h5>Consulta de medicos</h5>quantidade
+<h5>Consulta de medicos</h5>
 <p>Listagem de medicos Cadastrados</p>
 
 <table class="table table-hover table-sm table-bordered">
   <thead>
     <tr>
-      <td>Nome do medico</td>
-      <td class="d-none d-md-table-cell">CRM</td>
-      <td class="d-none d-sm-table-cell">Telefone</td>
-      <td class="d-none d-lg-table-cell">Tipo</td>
-
-
-      <td>Ações</td>
+      <th>Nome do medico</th>
+      <th class="d-none d-md-table-cell">CRM</th>
+      <th class="d-none d-sm-table-cell">Telefone</th>
+      <th class="d-none d-lg-table-cell">Tipo</th>
+      <th>Ações</th>
     </tr>
   </thead>
   <tbody>
@@ -22,7 +20,7 @@
       <td class="d-none d-lg-table-cell">{{m.tipo}}</td>
 
       <td>
-        <button class="btn btn-info btn-sm" [routerLink]="['/editar-medicos',m.idMedico]">Editar</button>
+        <button class="btn btn-sm botaoeditar" [routerLink]="['/editar-medicos',m.idMedico]">Editar</button>
         &nbsp;
         <button class="btn btn-dark btn-sm" (click)="excluir(m.idMedico)">Excluir</button>
 
