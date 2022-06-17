@@ -3,12 +3,15 @@ import { ConsultarMedicosComponent } from './consultar-medicos/consultar-medicos
 import { CadastrarMedicosComponent } from './cadastrar-medicos/cadastrar-medicos.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './login/login.component';
+import { AccountComponent } from './account/account.component';
 
 const routes: Routes = [
-  { path: '', component: ConsultarMedicosComponent },
   { path: 'cadastrar-medicos', component: CadastrarMedicosComponent },
   { path: 'consultar-medicos', component: ConsultarMedicosComponent },
-  { path: 'editar-medicos/:id', component: EditarMedicosComponent }
+  { path: 'editar-medicos/:id', component: EditarMedicosComponent },
+  { path: '', component: LoginComponent },
+  { path: 'account', component: AccountComponent },
 ];
 
 @NgModule({
