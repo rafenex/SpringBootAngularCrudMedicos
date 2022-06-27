@@ -6,11 +6,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import com.avaliacao.cast.avaliacaocast.dto.MedicoGetResponse;
-import com.avaliacao.cast.avaliacaocast.dto.MedicoPostRequest;
-import com.avaliacao.cast.avaliacaocast.entities.Medico;
-import com.avaliacao.cast.avaliacaocast.repository.IMedicoRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +17,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import com.avaliacao.cast.avaliacaocast.dto.MedicoGetResponse;
+import com.avaliacao.cast.avaliacaocast.dto.MedicoPostRequest;
+import com.avaliacao.cast.avaliacaocast.entities.Medico;
+import com.avaliacao.cast.avaliacaocast.repository.IMedicoRepository;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -122,5 +122,9 @@ public class MedicoController {
 		}
 		
 	}
+	
+	
+
+	
 
 }

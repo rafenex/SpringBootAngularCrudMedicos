@@ -1,3 +1,4 @@
+import { AuthHelper } from './../_helpers/auth-helpers';
 import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -13,21 +14,27 @@ export class ConsultarMedicosComponent implements OnInit {
 
   medicos: any[] = [];
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private authHelper: AuthHelper) {
 
   }
 
   ngOnInit(): void {
-    this.httpClient.get(
-      environment.apiUrl + '/medicos')
-      .subscribe(
-        (data) => {
-          this.medicos = data as any[];
-        },
-        (e) => {
-          console.log(e);
-        }
-      )
+    if (this.authHelper.isAuthenticated()) {
+      this.httpClient.get(
+        environment.apiUrl + '/medicos')
+        .subscribe(
+          (data) => {
+            this.medicos = data as any[];
+          },
+          (e) => {
+            console.log(e);
+          }
+        )
+    } else {
+      window.alert("Acesso negado");
+      window.location.href = "/";
+    }
+
   }
 
   formEditar = new FormGroup({
@@ -60,5 +67,22 @@ export class ConsultarMedicosComponent implements OnInit {
     }
   }
 
+  relatorio(): void {
+    this.httpClient.get(
+      "http://localhost:8080/report/pdf",
+      { responseType: 'text' })
+      .subscribe(
+
+        (data) => {
+          alert(data);
+          this.ngOnInit();
+        },
+        (e) => {
+          console.log(e);
+        }
+      )
+  }
 }
+
+
 

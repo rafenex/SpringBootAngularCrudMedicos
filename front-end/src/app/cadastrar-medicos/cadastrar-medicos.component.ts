@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { AuthHelper } from '../_helpers/auth-helpers';
 
 @Component({
   selector: 'app-cadastrar-medicos',
@@ -11,9 +12,14 @@ import { environment } from 'src/environments/environment';
 export class CadastrarMedicosComponent implements OnInit {
   mensagem = "";
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private authHelper: AuthHelper) { }
 
   ngOnInit(): void {
+    if (!this.authHelper.isAuthenticated()) {
+      window.alert("Acesso negado");
+      window.location.href = "/";
+    }
+
   }
 
   formCadastro = new FormGroup({

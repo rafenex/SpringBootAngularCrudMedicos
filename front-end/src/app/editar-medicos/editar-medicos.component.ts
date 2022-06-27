@@ -1,3 +1,4 @@
+import { AuthHelper } from './../_helpers/auth-helpers';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -12,7 +13,7 @@ import { environment } from 'src/environments/environment';
 export class EditarMedicosComponent implements OnInit {
   mensagem = "";
 
-  constructor(private httpClient: HttpClient, private activeRoute: ActivatedRoute) { }
+  constructor(private httpClient: HttpClient, private activeRoute: ActivatedRoute, private authHelper: AuthHelper) { }
 
   formEdicao = new FormGroup({
     idMedico: new FormControl('', []),
@@ -41,16 +42,21 @@ export class EditarMedicosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const idMedico = this.activeRoute.snapshot.paramMap.get('id') as string;
+    if (this.authHelper.isAuthenticated()) {
+      const idMedico = this.activeRoute.snapshot.paramMap.get('id') as string;
 
-    this.httpClient.get(environment.apiUrl + "/medicos/" + idMedico)
-      .subscribe(
-        (data: any) => {
-          this.formEdicao.patchValue(data);
-        },
-        (e) => {
-          console.log(e);
-        }
-      )
+      this.httpClient.get(environment.apiUrl + "/medicos/" + idMedico)
+        .subscribe(
+          (data: any) => {
+            this.formEdicao.patchValue(data);
+          },
+          (e) => {
+            console.log(e);
+          }
+        )
+    } else {
+      window.alert("Acesso negado");
+      window.location.href = "/";
+    }
   }
 }

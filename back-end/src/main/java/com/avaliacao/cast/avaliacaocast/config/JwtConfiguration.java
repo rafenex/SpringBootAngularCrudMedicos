@@ -12,6 +12,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 
+@SuppressWarnings("deprecation")
 @Configuration @EnableWebSecurity
 public class JwtConfiguration extends WebSecurityConfigurerAdapter{
 	
@@ -23,12 +24,14 @@ public class JwtConfiguration extends WebSecurityConfigurerAdapter{
 
 
         http.csrf().disable()
+        
 
                 .addFilterAfter(new JwtSecurity(), 
                 UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/account").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
+               .antMatchers(HttpMethod.POST, "/api/login").permitAll()                  
+                .antMatchers(HttpMethod.GET, "/report/**").permitAll()           
                 .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 .anyRequest()
                 .authenticated();

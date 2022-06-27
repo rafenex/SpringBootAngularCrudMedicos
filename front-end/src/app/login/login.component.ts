@@ -1,6 +1,7 @@
+
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { AuthHelper } from '../_helpers/auth-helpers';
 
@@ -10,9 +11,12 @@ import { AuthHelper } from '../_helpers/auth-helpers';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  mensagem_sucesso = '';
+  //mensagem_sucesso = '';
   mensagem_erro = '';
+  mensagem_sucesso = '';
   exibirPagina = false;
+
+
 
   constructor(private httpClient: HttpClient, private authHelper: AuthHelper) { }
 
@@ -34,6 +38,7 @@ export class LoginComponent implements OnInit {
     return this.formLogin.controls;
   }
 
+
   onSubmit(): void {
     this.mensagem_erro = '';
     this.exibirPagina = false;
@@ -41,12 +46,18 @@ export class LoginComponent implements OnInit {
       environment.apiUrl + '/login',
       this.formLogin.value, { responseType: 'text' }).subscribe(
         data => {
-          localStorage.setItem('access_token', data);
-          localStorage.setItem('login_usuario', this.formLogin.value.login!);
 
+          //salvar o Token no LOCAL storage
+          localStorage.setItem('access_token', data);
+
+          //salvar o Login no LocalStorage
+          localStorage.setItem('login_usuario', (this.formLogin.value.login)!);
+          this.mensagem_sucesso = 'Usuario Autenticado';
+          this.formLogin.reset();
 
           //redirecionamento
           window.location.href = "/consultar-medicos";
+
 
         },
         e => {
